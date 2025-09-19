@@ -1,0 +1,16 @@
+
+
+
+.estado-aprobado { color: green; }
+.estado-reprobado { color: red; }
+.estado-error    { color: red; }
+
+#contenedorNotas div {
+  margin-bottom: 10px; 
+}
+
+label {
+  display: inline-block;
+  width: 50px; 
+}
+
