@@ -9,7 +9,8 @@ const ejecutarCalculo = () => {
     let sumaTotal = 0;
     let cantidadDeNotas = 0;
     let hayError = false;
-.
+
+    
     todosLosInputs.forEach(input => {
         const valor = parseFloat(input.value);
 
