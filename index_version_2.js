@@ -32,7 +32,7 @@ const ejecutarCalculo = () => {
         resultadoComparacionDiv.className = "estado-error";
         return;
     }
-    console.log(hayError)
+
     if (cantidadDeNotas > 0) {
         const promedio = sumaTotal / cantidadDeNotas;
         const mensajeResultado = analizarPromedio(promedio);
@@ -45,25 +45,23 @@ const ejecutarCalculo = () => {
         }
 
         const notas = Array.from(todosLosInputs).map((input) => parseFloat(input.value))
-        
+
         const calculoActualParaElHistorial = {
             fecha: new Date(),
             notas: notas,
             promedio: promedio,
         };
-        // 1. LEER el historial viejo.
-const historialGuardado = localStorage.getItem('historial');
+        // LEER el historial viejo.
+        const historialGuardado = localStorage.getItem('historial');
 
-// 2. PREPARAR la lista.
-const historial = historialGuardado ? JSON.parse(historialGuardado) : [];
+        // PREPARAR la lista.
+        const historial = historialGuardado ? JSON.parse(historialGuardado) : [];
 
-// 3. AÑADIR el nuevo cálculo a la lista.
-historial.push(calculoActualParaElHistorial);
+        // AÑADIR el nuevo cálculo a la lista.
+        historial.push(calculoActualParaElHistorial);
 
-// 4. GUARDAR la lista completa y actualizada.
-localStorage.setItem('historial', JSON.stringify(historial));
-
-
+        // GUARDAR la lista completa y actualizada.
+        localStorage.setItem('historial', JSON.stringify(historial));
 
 
     } else {
@@ -130,41 +128,42 @@ contenedorPadreNotas.addEventListener('click', function (accionEliminarNotas) {
     }
 });
 
-// 1. Función dedicada a mostrar el historial en el HTML
+//función dedicada a mostrar el historial en el HTML
 function mostrarHistorial() {
-  const listaHistorial = document.getElementById('listaHistorial');
-  const historialGuardado = localStorage.getItem('historial');
-  const historial = historialGuardado ? JSON.parse(historialGuardado) : [];
+    const listaHistorial = document.getElementById('listaHistorial');
+    const historialGuardado = localStorage.getItem('historial');
+    const historial = historialGuardado ? JSON.parse(historialGuardado) : [];
 
-  // Limpiamos la lista actual para no mostrar datos repetidos
-  listaHistorial.innerHTML = '';
+    // limpiamos la lista actual para no mostrar datos repetidos
+    listaHistorial.innerHTML = '';
 
-  // Por cada 'calculo' en nuestro array de historial...
-  historial.forEach(calculo => {
-    // ...creamos un nuevo elemento <li>
-    const nuevoItem = document.createElement('li');
-    
-    // ...le ponemos el texto con los datos del cálculo
-    // El .join(', ') es para que las notas se vean bonitas: [4, 5, 3]
-    nuevoItem.textContent = `Fecha: ${calculo.fecha} - Notas: [${calculo.notas.join(', ')}] - Promedio: ${calculo.promedio}`;
-    
-    // ...y añadimos el <li> a la lista <ul> del HTML
-    listaHistorial.appendChild(nuevoItem);
-  });
+    // Por cada 'calculo' en nuestro array de historial
+    historial.forEach(calculo => {
+        // ...creamos un nuevo elemento <li>
+        const nuevoItem = document.createElement('li');
+
+
+
+        nuevoItem.textContent = `Fecha: ${calculo.fecha} - Notas: [${calculo.notas.join(', ')}] - Promedio: ${calculo.promedio}`;  // le ponemos el texto con los datos del cálculo
+
+        // añadimos el <li> a la lista <ul> del HTML
+        listaHistorial.appendChild(nuevoItem);
+    });
 }
 
-// 2. Lógica para el botón de limpiar historial
+
 const limpiarHistorialBoton = document.getElementById('limpiarHistorialBoton');
 
 limpiarHistorialBoton.addEventListener('click', () => {
-  // Borramos el historial de la memoria del navegador
-  localStorage.removeItem('historial');
-  
-  // Volvemos a dibujar el historial (que ahora estará vacío)
-  mostrarHistorial();
+    // borramos el historial de la memoria del navegador
+    localStorage.removeItem('historial');
+
+    // Volvemos a dibujar el historial 
+    mostrarHistorial();
+
 });
 
 
-// 3. LLAMADA INICIAL
-// Hacemos que el historial se muestre en pantalla tan pronto como la página carga.
-mostrarHistorial();
+
+// hacemos que el historial se muestre en pantalla tan pronto como la página carga.
+mostrarHistorial(); 
